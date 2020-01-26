@@ -1,0 +1,46 @@
+﻿@model  MVCClient.Models.GoalsCollection
+
+@if (Model!=null && Model.Goals.Any())
+{
+    <h3>Click on "Trigger" button to achive respective goal</h3>
+    <hr/>
+    @foreach (var goal in Model.Goals)
+    {
+        <div class="goal-detail" style="margin-bottom:10px;">
+            <div class="row">
+                <div class="col-lg-2">@goal.GoalName</div>
+                <div class="col-lg-4">
+                    @if (goal.isAchived)
+                    {
+                        <a class="btn btn-default">Trigger</a>
+                     }
+                     else
+                     {  
+                        <a asp-area="" asp-controller="Home" asp-action="Trigger/@goal.GoalID" asp-id="" class="btn btn-primary">Trigger</a>
+                      }
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div>No Goals added here...</div>
+}
+<div>
+    <div>
+        @if (TempData["Triggered"]!=null)
+        {
+            string Triggered = TempData["Triggered"].ToString();
+            @if (Triggered == "True")
+            {
+                <p class="alert-success">Goal has been triggered Successfully!!!</p>
+            }
+            else
+            {
+                <p class="alert-info">@Triggered</p>
+            }
+        }
+
+    </div>
+</div>
